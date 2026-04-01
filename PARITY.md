@@ -137,7 +137,7 @@ Evidence:
 - Missing major TS command families: `/agents`, `/hooks`, `/mcp`, `/plugin`, `/skills`, `/plan`, `/review`, `/tasks`, and many others.
 - No Rust equivalent to TS structured IO / remote transport layers.
 - No TS-style handler decomposition for auth/plugins/MCP/agents.
-- JSON prompt mode is improved on this branch, but still not clean transport parity: empirical verification shows tool-capable JSON output can emit human-readable tool-result lines before the final JSON object.
+- JSON prompt mode now maintains clean transport output in tool-capable runs; targeted CLI coverage should guard against regressions.
 
 **Status:** functional local CLI core, much narrower than TS.
 
@@ -161,7 +161,7 @@ Evidence:
 - No TS-style hook-aware orchestration layer.
 - No TS structured/remote assistant transport stack.
 - No richer TS assistant/session-history/background-task integration.
-- JSON output path is no longer single-turn only on this branch, but output cleanliness still lags TS transport expectations.
+- JSON output path is no longer single-turn only on this branch, and tool-capable prompt output now stays transport-clean like the TypeScript behavior.
 
 **Status:** strong core loop, missing orchestration layers.
 
@@ -209,6 +209,6 @@ Evidence:
 - **Unlimited max_iterations**
   - Verified at `rust/crates/runtime/src/conversation.rs` with `usize::MAX`.
 
-### Remaining notable parity issue
+### JSON prompt output cleanliness status
 - **JSON prompt output cleanliness**
-  - Tool-capable JSON mode now loops, but empirical verification still shows pre-JSON human-readable tool-result output when tools fire.
+  - Verified clean in tool-capable prompt mode: stdout remains a single final JSON object when tools fire.
